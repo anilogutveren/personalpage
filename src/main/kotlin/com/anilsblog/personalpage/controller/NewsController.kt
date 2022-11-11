@@ -1,8 +1,10 @@
 package com.anilsblog.personalpage.controller
 
 import com.anilsblog.personalpage.entity.NewsEntity
+import com.anilsblog.personalpage.exception.InputValidationException
 import com.anilsblog.personalpage.service.NewsService
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
