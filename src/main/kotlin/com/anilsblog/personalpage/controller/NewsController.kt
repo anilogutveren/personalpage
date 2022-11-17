@@ -1,10 +1,7 @@
 package com.anilsblog.personalpage.controller
 
 import com.anilsblog.personalpage.entity.NewsEntity
-import com.anilsblog.personalpage.exception.InputValidationException
 import com.anilsblog.personalpage.service.NewsService
-import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -24,16 +21,22 @@ class NewsController(
         return newsService.findNewsById(id)
     }
 
-    @GetMapping("/allNews", produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
+    @GetMapping("/allNews")
     fun getAllNews(): Flux<NewsEntity> {
         println("getAll called")
+
+        val response = newsService.findAllNews().subscribe(
+            { println("Received: $it") }, // onNext (Consumer<Object>)
+            { println("ERROR: $it") }, // onError (Consumer<Throwable>)
+            { println("Completed") } // onComplete (Runnable)
+        ) //--> Burasi test icin yapildi.
         return newsService.findAllNews()
     }
 
     @PostMapping("/addNews")
     fun addAnyNew(
         @RequestBody newsEntity: NewsEntity
-    ) {
+    ): Mono<NewsEntity> {
         println("save called for $newsEntity")
         return newsService.addANews(newsEntity)
     }

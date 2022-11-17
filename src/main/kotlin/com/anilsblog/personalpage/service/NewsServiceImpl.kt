@@ -18,7 +18,7 @@ class NewsServiceImpl(private val newsRepository: NewsRepository) : NewsService 
         return newsRepository.findAll()
     }
 
-    override fun addANews(newsEntity: NewsEntity) {
-        newsRepository.save(newsEntity)
+    override fun addANews(newsEntity: NewsEntity): Mono<NewsEntity> {
+        return newsRepository.save(newsEntity)
     }
 }

@@ -7,5 +7,5 @@ import reactor.core.publisher.Mono
 interface NewsService {
     fun findNewsById(id: String): Mono<NewsEntity>
     fun findAllNews(): Flux<NewsEntity>
-    fun addANews(newsEntity: NewsEntity)
+    fun addANews(newsEntity: NewsEntity): Mono<NewsEntity>
 }
