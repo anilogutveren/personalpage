@@ -1,8 +1,6 @@
 server:
   port: 8083
 spring:
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
   data:
     mongodb:
       host: anilspersonalpagescosmosdb.mongo.cosmos.azure.com
