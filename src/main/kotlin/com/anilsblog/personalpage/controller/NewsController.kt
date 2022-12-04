@@ -1,6 +1,8 @@
 package com.anilsblog.personalpage.controller
 
 import com.anilsblog.personalpage.entity.NewsEntity
+import com.anilsblog.personalpage.eventhub.EventService
+import com.anilsblog.personalpage.eventhub.NewsEvent
 import com.anilsblog.personalpage.service.NewsService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -14,7 +16,8 @@ import reactor.core.publisher.Mono
 @RestController
 @RequestMapping("/news")
 class NewsController(
-    private val newsService: NewsService
+    private val newsService: NewsService,
+    private val eventsService: EventService
 ) {
     @GetMapping("/{id}")
     fun getNews(@PathVariable id: String): Mono<NewsEntity> {
@@ -29,7 +32,7 @@ class NewsController(
             { println("Received: $it") }, // onNext (Consumer<Object>)
             { println("ERROR: $it") }, // onError (Consumer<Throwable>)
             { println("Completed") } // onComplete (Runnable)
-        ) //--> Burasi test icin yapildi.
+        ) // --> Burasi test icin yapildi.
         return newsService.findAllNews()
     }
 
@@ -39,5 +42,13 @@ class NewsController(
     ): Mono<NewsEntity> {
         println("save called for $newsEntity")
         return newsService.addANews(newsEntity)
+    }
+
+    @PostMapping("/addNewsWithEvents")
+    fun addEventNew(
+        @RequestBody newsEntity: NewsEntity
+    ) {
+        println("save called for $newsEntity")
+        eventsService.sendRegisteredNews(NewsEvent(newsEntity.news))
     }
 }
