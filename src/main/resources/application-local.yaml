@@ -3,6 +3,5 @@ server:
 spring:
   data:
     mongodb:
-      host: anilspersonalpagescosmosdb.mongo.cosmos.azure.com
       uri: mongodb://localhost:27017
       database: mydb
